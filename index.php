@@ -42,7 +42,7 @@
 			<li>postProfileId (This is the foreign key)</li>
 		</ul>
 		<p>
-			When profiles like posts it is a many to many relationship. When you find that you have a many to many relationship you must make another table called a weak entity.
+			When profiles like posts it is a many to many (m-n) relationship. When you find that you have a many to many relationship you must make another table called a weak entity.
 			In this case we are calling them likes.
 		</p>
 		<ul>
