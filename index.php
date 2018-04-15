@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="UTF-8"/>
 		<title>Data Design</title>
+		<link rel="stylesheet" href="style.css"/>
 	</head>
 	<body>
 		<h1>Data Design project</h1>
@@ -11,7 +12,8 @@
 		<div id="myDiv" name="myDiv" title="Example Div Element">
 		<h3>Persona</h3>
 		<P>
-		<li><strong>Name:</strong>Vishal Tucker</li>
+			<img src="vector-characters-businessman2.jpg">
+		<li><strong>Name:</strong>Michael Tucker</li>
 		<li><strong>Personality:</strong> Solo Traveler, Confident, Ambitious, and Determined. Vishal would love to travel the world worry-free.</li>
 		<li><strong>Gender:</strong> Male</li>
 		<li><strong>Age:</strong>27</li>
@@ -29,30 +31,30 @@
 		<li>As a member of Dribbble, I'd like to get as many likes and shares as possible.</li>
 		<p>
 		<h3>Use Case</h3>
-		<li><strong>Title: Graphic designing</strong></li>
+		<li><strong>Title:</strong> Graphic designing</li>
 		<li><strong>Name of the user, or persona, and their role:</strong> Vishal, a digital designer</li>
-		<li><strong>Usage PreconditionsL:</strong> Vishal needs to create a user account and has to have internet connection to make posts.</li>
-		<li><strong>Usage Postconditions:</strong> Vishal's able to easily post and share his designs. At the comfort of his own home or wherever he has internet connection.</li>
+		<li><strong>Usage PreconditionsL:</strong> Michael needs to create a user account and has to have internet connection to make posts.</li>
+		<li><strong>Usage Postconditions:</strong> Michael able to easily post and share his designs. At the comfort of his own home or wherever he has internet connection.</li>
 		<li><strong>Frequency of Use:</strong> three-times-week</li>
 		</p>
 		<ul>
 		<p>
 		<h3>Interaction Flow</h3>
-		<li>User Action 1: Vishal signs up for an account and enters his email and creates a username.</li>
+		<li>User Action 1: Michael signs up for an account and enters his email and creates a username.</li>
 		<li>System Response 1: Dribble sends confirmation email with activation link </li>
-		<li>User Action 2: Vishal clicks on activation link and is now able to post.</li>
+		<li>User Action 2: Michael clicks on activation link and is now able to post.</li>
 		<li>System Response 2:Dribbble displays a tutorial message to help create a first post to his account. </li>
-		<li>User Action 3: Vishal clicks on create first post</li>
+		<li>User Action 3: Michael clicks on create first post</li>
 		<li>System Response 3: Dribbble opens up a display box in which vishal can type his post, and a upload button to upload images</li>
-		<li>User Action 4: Vishal types content into his display box, and uploads an image and saves and submits post.</li>
+		<li>User Action 4: Michael types content into his display box, and uploads an image and saves and submits post.</li>
 		<li>System Response 4: Dribbble launches post, and members are able to view, like, share, and or follow.</li>
-		<li>User Action 5: Vishal clicks the logout button and signs out.</li>
+		<li>User Action 5: Michael clicks the logout button and signs out.</li>
 		<li>System Response 5: Dribbble logs out Vishal.</li>
 		</p>
 		</ul>
 		</ul>
 		<h2>Entities and Attributes/Classes</h2>
-		<h3>Classes:</h3>
+		<h3>Classes</h3>
 		<ul>
 		<li>Profile</li>
 		<li>Post</li>
