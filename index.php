@@ -14,7 +14,7 @@
 		<P>
 			<img src="vector-characters-businessman2.jpg">
 		<li><strong>Name:</strong>Michael Tucker</li>
-		<li><strong>Personality:</strong> Solo Traveler, Confident, Ambitious, and Determined. Vishal would love to travel the world worry-free.</li>
+		<li><strong>Personality:</strong> Solo Traveler, Confident, Ambitious, and Determined. Michael would love to travel the world worry-free.</li>
 		<li><strong>Gender:</strong> Male</li>
 		<li><strong>Age:</strong>27</li>
 		<div id="myDiv" name="myDiv" title="Example Div Element">
