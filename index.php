@@ -45,7 +45,7 @@
 		<li>User Action 2: Michael clicks on activation link and is now able to post.</li>
 		<li>System Response 2:Dribbble displays a tutorial message to help create a first post to his account. </li>
 		<li>User Action 3: Michael clicks on create first post</li>
-		<li>System Response 3: Dribbble opens up a display box in which vishal can type his post, and a upload button to upload images</li>
+		<li>System Response 3: Dribbble opens up a display box in which Michael can type his post, and a upload button to upload images</li>
 		<li>User Action 4: Michael types content into his display box, and uploads an image and saves and submits post.</li>
 		<li>System Response 4: Dribbble launches post, and members are able to view, like, share, and or follow.</li>
 		<li>User Action 5: Michael clicks the logout button and signs out.</li>
@@ -64,10 +64,9 @@
 		<ul>
 		<li>profileId (This is the primary key)</li>
 		<li>profileEmail</li>
-		<li>profileHash (Use hash and Salt instead of password)</li>
+		<li>profileHash (Use hash instead of password)</li>
 		<li>profileImage</li>
 		<li>profileName</li>
-		<li>profileSalt (Use hash and Salt instead of password)</li>
 		<li>profileUsername</li>
 		</ul>
 		<p>
@@ -79,7 +78,6 @@
 			<li>postImage</li>
 			<li>postDescription</li>
 			<li>postTitle</li>
-			<li>postDate</li>
 			<li>postProfileId (This is the foreign key)</li>
 		</ul>
 		<p>
