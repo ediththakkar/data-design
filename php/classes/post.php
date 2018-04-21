@@ -76,3 +76,4 @@ class Post implements \JsonSerializable {
 		}
 	}
 }
+
