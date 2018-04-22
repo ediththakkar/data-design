@@ -108,3 +108,152 @@ class Like implements \JsonSerializable {
 		//convert and store the like PostId
 		$this->likeProfileId = $uuid;
 	}
+
+	/**
+	 * gets the Like by like ProfileId
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $likeProfileId clap id to search for
+	 * @return Blog|null Blog found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when a variable are not the correct data type
+	 **/
+	public static function getClapbyClapId(\PDO $pdo, $likeProfileId) : ?Clap {
+		// sanitize the clapId before searching
+		try {
+			$clapId = self::validateUuid($likeProfileId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		// create query template
+		$query = "SELECT likeProfileId, likePostId FROM like WHERE likeProfileId = :likeProfileId";
+		$statement = $pdo->prepare($query);
+		// bind the like id to the place holder in the template
+		$parameters = ["likeProfileId" => $likeProfileId->getBytes()];
+		$statement->execute($parameters);
+		// grab the like from mySQL
+		try {
+			$like = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$clap = new Clap($row["likeProfileId"], $row["likePostId"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($like);
+	}
+	/**
+	 * gets the Like by blog id
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $likeProfileId blog id to search by
+	 * @return \SplFixedArray SplFixedArray of Claps found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getClapByClapBlogId(\PDO $pdo, $clapBlogId) : \SplFixedArray {
+		try {
+			$clapBlogId = self::validateUuid($clapBlogId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		// create query template
+		$query = "SELECT clapId, clapBlogId, clapProfileId FROM clap WHERE clapBlogId = :clapBlogId";
+		$statement = $pdo->prepare($query);
+		// bind the clapBlogId to the place holder in the template
+		$parameters = ["clapBlogId" => $clapBlogId->getBytes()];
+		$statement->execute($parameters);
+		// build an array of claps
+		$claps = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$clap = new Clap($row["clapId"], $row["clapBlogId"], $row["clapProfileId"]);
+				$claps[$claps->key()] = $clap;
+				$claps->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($claps);
+	}
+	/**
+	 * gets the like by likePostId
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $likePostId profile id to search by
+	 * @return \SplFixedArray SplFixedArray of Claps found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when Profilevariables are not the correct data type
+	 **/
+	public static function getLikePostId(\PDO $pdo, $likePostId) : \SplFixedArray {
+		try {
+			$likePostId = self::validateUuid($likePostId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		// create query template
+		$query = "SELECT likeProfileID, likePostId FROM like WHERE likePostId = :likePostId";
+		$statement = $pdo->prepare($query);
+		// bind the clapProfileId to the place holder in the template
+		$parameters = ["likePostId" => $likePostId->getBytes()];
+		$statement->execute($parameters);
+		// build an array of claps
+		$claps = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$like = new Like($row["likeProfileId"], $row["likePostId"]);
+				$likes[$likes->key()] = $like;
+				$likes->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($likes);
+	}
+	/**
+	 * gets all Likes
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @return \SplFixedArray SplFixedArray of Likes found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getAllLikes(\PDO $pdo) : \SPLFixedArray {
+		// create query template
+		$query = "SELECT likeProfileId, likePostId, likePostId FROM like";
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+// build an array of likes
+		$likes = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$like = new Like ($row["likeProfileId"], $row["likePostId"]);
+				$likes[$likes->key()] = $like;
+				$likes->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($likes);
+	}
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 **/
+	public function jsonSerialize() {
+		$fields = get_object_vars($this);
+		$fields["likeProfileId"] = $this->likeProfileId->toString();
+		$fields["likePostId"] = $this->likePostId->toString();
+		return($fields);
+	}
+}
