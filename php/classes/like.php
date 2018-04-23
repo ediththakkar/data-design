@@ -257,3 +257,4 @@ class Like implements \JsonSerializable {
 		return($fields);
 	}
 }
+}
