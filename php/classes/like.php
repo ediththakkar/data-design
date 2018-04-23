@@ -113,15 +113,15 @@ class Like implements \JsonSerializable {
 	 * gets the Like by like ProfileId
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @param Uuid|string $likeProfileId clap id to search for
-	 * @return Blog|null Blog found or null if not found
+	 * @param Uuid|string $likeProfileId like Profileid to search for
+	 * @return like|null like found or null if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when a variable are not the correct data type
 	 **/
-	public static function getClapbyClapId(\PDO $pdo, $likeProfileId) : ?Clap {
-		// sanitize the clapId before searching
+	public static function getlikebylikeProfileId(\PDO $pdo, $likeProfileId) : ?Like {
+		// sanitize the likeProfileId before searching
 		try {
-			$clapId = self::validateUuid($likeProfileId);
+			$likeProfileId = self::validateUuid($likeProfileId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
@@ -137,7 +137,7 @@ class Like implements \JsonSerializable {
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$clap = new Clap($row["likeProfileId"], $row["likePostId"]);
+				$like = new Like($row["likeProfileId"], $row["likePostId"]);
 			}
 		} catch(\Exception $exception) {
 			// if the row couldn't be converted, rethrow it
@@ -146,64 +146,28 @@ class Like implements \JsonSerializable {
 		return($like);
 	}
 	/**
-	 * gets the Like by blog id
+	 * gets the Like by like PostId
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @param Uuid|string $likeProfileId blog id to search by
-	 * @return \SplFixedArray SplFixedArray of Claps found
+	 * @param Uuid|string $likePostId like PostId to search by
+	 * @return \SplFixedArray SplFixedArray of Likes found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
-	public static function getClapByClapBlogId(\PDO $pdo, $clapBlogId) : \SplFixedArray {
+	public static function getLikeByLikePostId(\PDO $pdo, $likePostId) : \SplFixedArray {
 		try {
-			$clapBlogId = self::validateUuid($clapBlogId);
+			$LikePostId = self::validateUuid($likePostId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		// create query template
-		$query = "SELECT clapId, clapBlogId, clapProfileId FROM clap WHERE clapBlogId = :clapBlogId";
+		$query = "SELECT likeProfileId, likePostId FROM like WHERE likePostId = :likePostId";
 		$statement = $pdo->prepare($query);
-		// bind the clapBlogId to the place holder in the template
-		$parameters = ["clapBlogId" => $clapBlogId->getBytes()];
-		$statement->execute($parameters);
-		// build an array of claps
-		$claps = new \SplFixedArray($statement->rowCount());
-		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-		while(($row = $statement->fetch()) !== false) {
-			try {
-				$clap = new Clap($row["clapId"], $row["clapBlogId"], $row["clapProfileId"]);
-				$claps[$claps->key()] = $clap;
-				$claps->next();
-			} catch(\Exception $exception) {
-				// if the row couldn't be converted, rethrow it
-				throw(new \PDOException($exception->getMessage(), 0, $exception));
-			}
-		}
-		return($claps);
-	}
-	/**
-	 * gets the like by likePostId
-	 *
-	 * @param \PDO $pdo PDO connection object
-	 * @param Uuid|string $likePostId profile id to search by
-	 * @return \SplFixedArray SplFixedArray of Claps found
-	 * @throws \PDOException when mySQL related errors occur
-	 * @throws \TypeError when Profilevariables are not the correct data type
-	 **/
-	public static function getLikePostId(\PDO $pdo, $likePostId) : \SplFixedArray {
-		try {
-			$likePostId = self::validateUuid($likePostId);
-		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-			throw(new \PDOException($exception->getMessage(), 0, $exception));
-		}
-		// create query template
-		$query = "SELECT likeProfileID, likePostId FROM like WHERE likePostId = :likePostId";
-		$statement = $pdo->prepare($query);
-		// bind the clapProfileId to the place holder in the template
+		// bind the likePostId to the place holder in the template
 		$parameters = ["likePostId" => $likePostId->getBytes()];
 		$statement->execute($parameters);
-		// build an array of claps
-		$claps = new \SplFixedArray($statement->rowCount());
+		// build an array of likes
+		$likes = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
@@ -217,6 +181,7 @@ class Like implements \JsonSerializable {
 		}
 		return($likes);
 	}
+
 	/**
 	 * gets all Likes
 	 *
