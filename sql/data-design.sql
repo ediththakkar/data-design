@@ -1,8 +1,8 @@
 ALTER DATABASE egarcia262 CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
-DROP TABLE IF EXISTS `like`;
-DROP TABLE IF EXISTS post;
 DROP TABLE IF EXISTS profile;
+DROP TABLE IF EXISTS post;
+DROP TABLE IF EXISTS like;
 
 CREATE TABLE profile (
 	profileId BINARY (16) NOT NULL,
@@ -28,11 +28,11 @@ CREATE TABLE post (
 );
 
 CREATE TABLE like (
-likeProfileId BINARY (16)
+	likeProfileId BINARY (16)
 -- (This is a foreign key. Both foreign keys make the primary key)
-likePostId BINARY (16)
+	likePostId BINARY (16)
 -- (This is a foreign key. Both foreign keys make the primary key)
-FOREIGN KEY(likeProfileId) REFERENCES like (profileId),
-FOREIGN KEY(likePostId) REFERENCES post (postId),
-PRIMARY KEY (likeProfileId, likePostId)
+	FOREIGN KEY(likeProfileId) REFERENCES profile (profileId),
+	FOREIGN KEY(likePostId) REFERENCES post (postId),
+	PRIMARY KEY (likeProfileId, likePostId)
 );
