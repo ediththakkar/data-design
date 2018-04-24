@@ -1,4 +1,4 @@
-ALTER DATABASE your_DATA_CHANGE_ME CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+ALTER DATABASE egarcia262 CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
 DROP TABLE IF EXISTS `like`;
 DROP TABLE IF EXISTS post;
@@ -27,10 +27,12 @@ CREATE TABLE post (
 	PRIMARY KEY (postId)
 );
 
-CREATE TABLE `like` (
--- likeProfileId (This is a foreign key. Both foreign keys make the primary key)
--- likePostId (This is a foreign key. Both foreign keys make the primary key)
--- FOREIGN KEY(likeProfileId) REFERENCES like (profileId),
--- FOREIGN KEY(likePostId) REFERENCES post (postId),
--- PRIMARY KEY (likeProfileId, likePostId)
+CREATE TABLE like (
+likeProfileId BINARY (16)
+-- (This is a foreign key. Both foreign keys make the primary key)
+likePostId BINARY (16)
+-- (This is a foreign key. Both foreign keys make the primary key)
+FOREIGN KEY(likeProfileId) REFERENCES like (profileId),
+FOREIGN KEY(likePostId) REFERENCES post (postId),
+PRIMARY KEY (likeProfileId, likePostId)
 );
