@@ -111,7 +111,7 @@ public function setPostId ( $newPostId) : void {
  *
  *@return Uuid value of post Image
  */
-public function getPostImage() : Uuid {
+public function getPostImage() : string {
 	return($this->postImage);
 }
 
@@ -387,7 +387,7 @@ public function setPostProfileId ( $newPostProfileId) : void {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
-	public static function getPostByPostTitle(\PDO $pdo, string $postTitle) : \SplFixedArray {
+	public static function getPostByPostTitle(\PDO $pdo, string $postTitle) :\ SplFixedArray {
 	// sanitize the description before searching
 	$postTitle = trim($postTitle);
 	$postTitle = filter_var($postTitle, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
